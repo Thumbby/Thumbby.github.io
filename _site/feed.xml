@@ -1,0 +1,1065 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Thumbby's Blog</title>
+    <description>随便记录自己的即将开始(或者根本不会开始)的程序猿生活
+</description>
+    <link>http://yourdomain.com/clean/</link>
+    <atom:link href="http://yourdomain.com/clean/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 03 Aug 2021 16:56:43 +0800</pubDate>
+    <lastBuildDate>Tue, 03 Aug 2021 16:56:43 +0800</lastBuildDate>
+    <generator>Jekyll v4.2.0</generator>
+    
+      <item>
+        <title>实习日记14</title>
+        <description>&lt;h2 id=&quot;day14&quot;&gt;Day14&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;熟悉后端打包发版流程&lt;/p&gt;
+
+    &lt;ol&gt;
+      &lt;li&gt;在IDEA的maven栏中，选择parent父模块，package进行打包，即可生成core、service和web层各自的jar包，经实验可以不在原生成路径进行运行，但是会在当前路径生成文件&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;发现定时同步数据时需要获取外部接口，为其设置连接时间和数据传输时间，防止程序卡死线程堆积&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;ConnectTimeout&lt;/p&gt;
+
+        &lt;p&gt;指的是建立连接所用的时间，适用于网络状况正常的情况下，两端连接所用的时间。在java中，网络状况正常的情况下，例如使用HttpClient或者HttpURLConnetion连接时设置参数connectTimeout=5000即5秒，如果连接用时超过5秒就是抛出java.net.SocketException: connetct time out的异常&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;ReadTimeout&lt;/p&gt;
+
+        &lt;p&gt;指的是建立连接后从服务器读取到可用资源所用的时间。在这里我们可以这样理解&lt;/p&gt;
+
+        &lt;p&gt;ReadTimeout：正常情况下，当我们发出请求时可以收到请求的结果，也就是页面上展示的内容，但是当网络状况很差的时候，就会出现页面上无法展示出内容的情况。另外当我们使用爬虫或者其他全自动的程序时，无法判断当前的网络状况是否良好，此时就有了ReadTimeout的用武之地了，通过设置ReadTimeout参数，例：&lt;/p&gt;
+
+        &lt;p&gt;ReadTimeout=5000，超过5秒没有读取到内容时，就认为此次读取不到内容并抛出Java.net.SocketException: read time out的异常。&lt;/p&gt;
+
+        &lt;p&gt;根据上面关于ConnectTimeout和ReadTimeout的描述，在我们使用需要设置这两项参数的服务或程序时，应该对两项参数一起设置。&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;同时了解一下HttpClient连接池，这是apache中用于处理http的交互，内部使用了http连接池，可参考连接：https://www.cnblogs.com/hujunzheng/p/11629198.html&lt;/p&gt;
+
+        &lt;p&gt;在生产环境系统使用HttpClient工具类会出现导致系统假死的问题：&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;情景1：httpclient调用服务时没有设置超时时间，http线程都处于自身阻塞状态，拖垮应用服务器。&lt;/li&gt;
+          &lt;li&gt;情景2：httpclient连接池单个路由最大连接数设置不合理，业务高峰期时无法及时从连接池中获取连接，导致http线程都处于BLOCKED（阻塞于锁）状态，逐渐拖垮应用服务器。&lt;/li&gt;
+        &lt;/ul&gt;
+
+        &lt;p&gt;从以上两个场景分析一下，首先对于超时时间的设置，要考虑http请求连接超时、http请求读取内容超时、从连接池中获取可用http连接超时，要根据具体的业务场景合理化配置。还有就是最大连接池数和每个路由最大连接数配置，也需要考虑哪些业务是否有业务高峰期然后合理配置，针对特殊的业务设置使用唯一的HttpClient，即为该业务创建指定的线程池。&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;搭建自己的个人博客：使用jekyll，具体流程会在第一篇博客中描述，现在需要处理markdown文件格式渲染问题&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 03 Aug 2021 00:00:00 +0800</pubDate>
+        <link>http://yourdomain.com/clean/jekyll/update/2021/08/03/diary-for-internship-day14.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/clean/jekyll/update/2021/08/03/diary-for-internship-day14.html</guid>
+        
+        
+        <category>jekyll</category>
+        
+        <category>update</category>
+        
+      </item>
+    
+      <item>
+        <title>实习日记13</title>
+        <description>&lt;h2 id=&quot;day13&quot;&gt;Day13&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;继续城运大屏定时任务的开发&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;赶回东方体育中心&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Swagger学习：&lt;/p&gt;
+
+    &lt;ol&gt;
+      &lt;li&gt;
+        &lt;p&gt;使用SpringBoot集成Swagger2构建Restful API&lt;/p&gt;
+
+        &lt;ol&gt;
+          &lt;li&gt;
+            &lt;p&gt;引用相关jar包，使用maven在pom.xml中引入相关依赖：&lt;/p&gt;
+
+            &lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;io.springfox&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;springfox-swagger2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;2.4.0&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;io.springfox&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;springfox-swagger-ui&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;2.4.0&lt;span class=&quot;nt&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;创建swagger的配置类&lt;/p&gt;
+
+            &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;com.xingguo.springboot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+         
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.context.annotation.Bean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.springframework.context.annotation.Configuration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+         
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;springfox.documentation.builders.ApiInfoBuilder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;springfox.documentation.builders.PathSelectors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;springfox.documentation.builders.RequestHandlerSelectors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;springfox.documentation.service.ApiInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;springfox.documentation.service.Contact&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;springfox.documentation.spi.DocumentationType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;springfox.documentation.spring.web.plugins.Docket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;springfox.documentation.swagger2.annotations.EnableSwagger2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+         
+&lt;span class=&quot;nd&quot;&gt;@Configuration&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@EnableSwagger2&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Swagger2Configuration&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+         
+    &lt;span class=&quot;nd&quot;&gt;@Bean&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Docket&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;buildDocket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Docket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;DocumentationType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;SWAGGER_2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;apiInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buildApiInf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;apis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;RequestHandlerSelectors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;basePackage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;com.xingguo.springboot.controller&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;PathSelectors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;any&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;())&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+         
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ApiInfo&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;buildApiInf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ApiInfoBuilder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+                    &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;标题&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+                    &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;springboot swagger2&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+                    &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;termsOfServiceUrl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;网址链接&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+                    &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;contact&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Contact&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;diaoxingguo&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;http://blog.csdn.net/u014231523&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;diaoxingguo@163.com&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
+                    &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+         
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+         
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;在原来2.2.0的版本中使用new ApiInfo()的方法已经过时，使用new ApiInfoBuilder()进行构造，需要什么参数就添加什么参数。当然也可以什么都添加。如：&lt;/p&gt;
+
+            &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ApiInfo&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;buildApiInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ApiInfoBuilder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+          &lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;注解说明&lt;/p&gt;
+
+        &lt;ol&gt;
+          &lt;li&gt;
+            &lt;p&gt;用于controller上：&lt;/p&gt;
+
+            &lt;table&gt;
+              &lt;thead&gt;
+                &lt;tr&gt;
+                  &lt;th&gt;注解&lt;/th&gt;
+                  &lt;th&gt;说明&lt;/th&gt;
+                &lt;/tr&gt;
+              &lt;/thead&gt;
+              &lt;tbody&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;@Api&lt;/td&gt;
+                  &lt;td&gt;对请求类的说明&lt;/td&gt;
+                &lt;/tr&gt;
+              &lt;/tbody&gt;
+            &lt;/table&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;用于方法上(说明参数的含义)：&lt;/p&gt;
+
+            &lt;table&gt;
+              &lt;thead&gt;
+                &lt;tr&gt;
+                  &lt;th&gt;注解&lt;/th&gt;
+                  &lt;th&gt;说明&lt;/th&gt;
+                &lt;/tr&gt;
+              &lt;/thead&gt;
+              &lt;tbody&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;@ApiOperation&lt;/td&gt;
+                  &lt;td&gt;方法的说明&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;@ApiImplicitParams、@ApiImplicitParam&lt;/td&gt;
+                  &lt;td&gt;方法的参数的说明；@ApiImplicitParams 用于指定单个参数的说明&lt;/td&gt;
+                &lt;/tr&gt;
+              &lt;/tbody&gt;
+            &lt;/table&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;用于方法上(返回参数或对象的说明)&lt;/p&gt;
+
+            &lt;table&gt;
+              &lt;thead&gt;
+                &lt;tr&gt;
+                  &lt;th&gt;注释&lt;/th&gt;
+                  &lt;th&gt;说明&lt;/th&gt;
+                &lt;/tr&gt;
+              &lt;/thead&gt;
+              &lt;tbody&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;@ApiResponses、@ApiResponse方法返回值的说明&lt;/td&gt;
+                  &lt;td&gt;@ApiResponses 用于指定单个参数的说明&lt;/td&gt;
+                &lt;/tr&gt;
+              &lt;/tbody&gt;
+            &lt;/table&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;对象类&lt;/p&gt;
+
+            &lt;table&gt;
+              &lt;thead&gt;
+                &lt;tr&gt;
+                  &lt;th&gt;注解&lt;/th&gt;
+                  &lt;th&gt;说明&lt;/th&gt;
+                &lt;/tr&gt;
+              &lt;/thead&gt;
+              &lt;tbody&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;@ApiModel&lt;/td&gt;
+                  &lt;td&gt;用在JavaBean类上，说明JavaBean的用途&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;@ApiModelProperty&lt;/td&gt;
+                  &lt;td&gt;用在JavaBean类的属性上面，说明此属性的的含议&lt;/td&gt;
+                &lt;/tr&gt;
+              &lt;/tbody&gt;
+            &lt;/table&gt;
+          &lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;各注解的参数及说明：&lt;/p&gt;
+
+        &lt;ol&gt;
+          &lt;li&gt;
+            &lt;p&gt;@Api：请求类的说明&lt;/p&gt;
+
+            &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@Api&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;放在&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;请求的类上&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;与&lt;/span&gt; &lt;span class=&quot;nd&quot;&gt;@Controller&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;并列&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;说明类的作用&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;如用户模块&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;订单类等&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;。&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;tags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;说明该类的作用&quot;&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;该参数没什么意义，所以不需要配置&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;属性配置：&lt;/p&gt;
+
+            &lt;table&gt;
+              &lt;thead&gt;
+                &lt;tr&gt;
+                  &lt;th&gt;属性名称&lt;/th&gt;
+                  &lt;th&gt;备注&lt;/th&gt;
+                &lt;/tr&gt;
+              &lt;/thead&gt;
+              &lt;tbody&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;value&lt;/td&gt;
+                  &lt;td&gt;url的路径值&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;tags&lt;/td&gt;
+                  &lt;td&gt;如果设置这个值，value的值会被覆盖&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;description&lt;/td&gt;
+                  &lt;td&gt;对api资源的描述&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;basePath&lt;/td&gt;
+                  &lt;td&gt;基本路径&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;position&lt;/td&gt;
+                  &lt;td&gt;如果配置多个Api可以改变展示的顺序&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;produces&lt;/td&gt;
+                  &lt;td&gt;如, “application/json, application/xml”&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;consumes&lt;/td&gt;
+                  &lt;td&gt;如, “application/json, application/xml”&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;protocols&lt;/td&gt;
+                  &lt;td&gt;协议类型，如: http, https, ws, wss.&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;authorizations&lt;/td&gt;
+                  &lt;td&gt;高级特性认证时配置&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;hidden&lt;/td&gt;
+                  &lt;td&gt;配置为true则在文件中隐藏&lt;/td&gt;
+                &lt;/tr&gt;
+              &lt;/tbody&gt;
+            &lt;/table&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;@ApiOperation：方法的说明&lt;/p&gt;
+
+            &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@ApiOperation&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;用在请求的方法上，说明方法的作用&quot;&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;说明方法的作用&quot;&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;notes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;方法的备注说明&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;@ApiImplicitParams，@ApilmplicitParam：方法参数的说明&lt;/p&gt;
+
+            &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@ApiImplicitParams&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;用在请求的方法上&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;包含一组参数说明&lt;/span&gt;
+	&lt;span class=&quot;nd&quot;&gt;@ApiImplicitParam&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;对单个参数的说明&lt;/span&gt;	    
+	    &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;参数名&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;参数的说明&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;、&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;描述&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;required&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;参数是否必须必填&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;paramType&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;参数放在哪个地方&lt;/span&gt;
+	        &lt;span class=&quot;err&quot;&gt;·&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;query&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;请求参数的获取&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@RequestParam&lt;/span&gt;
+	        &lt;span class=&quot;err&quot;&gt;·&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;header&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;请求参数的获取&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@RequestHeader&lt;/span&gt;	      
+	        &lt;span class=&quot;err&quot;&gt;·&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;用于restful接口&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;）&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;--&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;请求参数的获取&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@PathVariable&lt;/span&gt;
+	        &lt;span class=&quot;err&quot;&gt;·&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;请求体&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;）&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;--&amp;gt;&lt;/span&gt;  &lt;span class=&quot;nd&quot;&gt;@RequestBody&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;
+	        &lt;span class=&quot;err&quot;&gt;·&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;form&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;（&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;普通表单提交&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;）&lt;/span&gt;	   
+	    &lt;span class=&quot;n&quot;&gt;dataType&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;参数类型&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;默认String&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;其它值dataType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Integer&quot;&lt;/span&gt;	   
+	    &lt;span class=&quot;n&quot;&gt;defaultValue&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;参数的默认值&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;@ApiResponses、@ApiResponse：方法返回值的状态码说明：&lt;/p&gt;
+
+            &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@ApiResponses&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;方法返回对象的说明&lt;/span&gt;
+	&lt;span class=&quot;nd&quot;&gt;@ApiResponse&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;每个参数的说明&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;数字&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;例如400&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;信息&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;，&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;例如&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;请求参数没填好&quot;&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;：&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;抛出异常的类&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;@ApiModel：用于JavaBean上，表示对JavaBean的功能描述&lt;/p&gt;
+
+            &lt;p&gt;主要用处有两个：&lt;/p&gt;
+
+            &lt;ol&gt;
+              &lt;li&gt;
+                &lt;p&gt;当请求数据描述，即@RequestBody时，用于封装请求(包括数据的各种校验)数据；&lt;/p&gt;
+
+                &lt;p&gt;例：&lt;/p&gt;
+
+                &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;@ApiModel(description = &quot;用户登录&quot;)
+public class UserLoginVO implements Serializable {
+            
+	private static final long serialVersionUID = 1L;
+            
+	@ApiModelProperty(value = &quot;用户名&quot;,required=true)	
+	private String username;
+            
+	@ApiModelProperty(value = &quot;密码&quot;,required=true)	
+	private String password;
+            	
+	// getter/setter省略
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;                &lt;/div&gt;
+
+                &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@Api&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;用户模块&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nd&quot;&gt;@Controller&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UserController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            
+	&lt;span class=&quot;nd&quot;&gt;@ApiOperation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;用户登录&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;notes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;	
+	&lt;span class=&quot;nd&quot;&gt;@PostMapping&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;/login&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;login&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@RequestBody&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UserLoginVO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userLoginVO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userSerivce&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;login&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userLoginVO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;R&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;okData&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+	&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;                &lt;/div&gt;
+
+                &lt;p&gt;&lt;img src=&quot;https://img-blog.csdnimg.cn/20191227165035627.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3hpYW9qaW4yMWNlbg==,size_16,color_FFFFFF,t_70&quot; alt=&quot;在这里插入图片描述&quot; /&gt;&lt;/p&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;当响应值是对象时，即 @ResponseBody时，用于返回值对象的描述。&lt;/p&gt;
+
+                &lt;p&gt;例：&lt;/p&gt;
+
+                &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nd&quot;&gt;@ApiModel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;返回响应数据&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;RestMessage&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Serializable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            
+	&lt;span class=&quot;nd&quot;&gt;@ApiModelProperty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;是否成功&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;required&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;	
+            	
+	&lt;span class=&quot;nd&quot;&gt;@ApiModelProperty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;错误码&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;errCode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+            	
+	&lt;span class=&quot;nd&quot;&gt;@ApiModelProperty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;提示信息&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+            	
+    &lt;span class=&quot;nd&quot;&gt;@ApiModelProperty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;数据&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+            		
+	&lt;span class=&quot;cm&quot;&gt;/* getter/setter 略*/&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;                &lt;/div&gt;
+              &lt;/li&gt;
+            &lt;/ol&gt;
+          &lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;Markdown语法学习&lt;/p&gt;
+
+        &lt;ol&gt;
+          &lt;li&gt;
+            &lt;p&gt;标题&lt;/p&gt;
+
+            &lt;p&gt;在想要设置为标题的文字前面加#来表示
+一个#是一级标题，二个#是二级标题，以此类推。支持六级标题。&lt;/p&gt;
+
+            &lt;p&gt;注：标准语法一般在#后跟个空格再写文字，貌似简书不加空格也行。&lt;/p&gt;
+
+            &lt;p&gt;示例：&lt;/p&gt;
+
+            &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 这是一级标题
+## 这是二级标题
+### 这是三级标题
+#### 这是四级标题
+##### 这是五级标题
+###### 这是六级标题
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;字体&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;加粗&lt;/li&gt;
+            &lt;/ul&gt;
+
+            &lt;p&gt;要加粗的文字左右分别用两个*号包起来&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;斜体&lt;/li&gt;
+            &lt;/ul&gt;
+
+            &lt;p&gt;要倾斜的文字左右分别用一个*号包起来&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;斜体加粗&lt;/li&gt;
+            &lt;/ul&gt;
+
+            &lt;p&gt;要倾斜和加粗的文字左右分别用三个*号包起来&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;删除线&lt;/li&gt;
+            &lt;/ul&gt;
+
+            &lt;p&gt;要加删除线的文字左右分别用两个~~号包起来&lt;/p&gt;
+
+            &lt;p&gt;示例：&lt;/p&gt;
+
+            &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;**这是加粗的文字**
+*这是倾斜的文字*`
+***这是斜体加粗的文字***
+~~这是加删除线的文字~~
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;引用&lt;/p&gt;
+
+            &lt;p&gt;在引用的文字前加&amp;gt;即可。引用也可以嵌套，如加两个»三个»&amp;gt;n个…&lt;/p&gt;
+
+            &lt;p&gt;示例：&lt;/p&gt;
+
+            &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt;这是引用的内容
+&amp;gt;&amp;gt;这是引用的内容
+&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;这是引用的内容
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;分割线&lt;/p&gt;
+
+            &lt;p&gt;三个或者三个以上的 - 或者 * 都可以。&lt;/p&gt;
+
+            &lt;p&gt;示例：&lt;/p&gt;
+
+            &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
+----
+***
+*****
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;图片&lt;/p&gt;
+
+            &lt;p&gt;语法：&lt;/p&gt;
+
+            &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;![图片alt](图片地址 ''图片title'')
+         
+图片alt就是显示在图片下面的文字，相当于对图片内容的解释。
+图片title是图片的标题，当鼠标移到图片上时显示的内容。title可加可不加
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;超链接&lt;/p&gt;
+
+            &lt;p&gt;语法：&lt;/p&gt;
+
+            &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[超链接名](超链接地址 &quot;超链接title&quot;)
+title可加可不加
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;列表&lt;/p&gt;
+
+            &lt;ol&gt;
+              &lt;li&gt;
+                &lt;p&gt;无序列表&lt;/p&gt;
+
+                &lt;p&gt;无序列表用 - + * 任何一种都可以&lt;/p&gt;
+
+                &lt;p&gt;语法：&lt;/p&gt;
+
+                &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;- 列表内容
++ 列表内容
+* 列表内容
+            
+注意：- + * 跟内容之间都要有一个空格
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;                &lt;/div&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;有序列表&lt;/p&gt;
+
+                &lt;p&gt;语法：
+数字加点&lt;/p&gt;
+
+                &lt;p&gt;语法：&lt;/p&gt;
+
+                &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1. 列表内容
+2. 列表内容
+3. 列表内容
+            
+注意：序号跟内容之间要有空格
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;                &lt;/div&gt;
+              &lt;/li&gt;
+              &lt;li&gt;
+                &lt;p&gt;列表嵌套&lt;/p&gt;
+
+                &lt;p&gt;上一级和下一级之间敲三个空格即可&lt;/p&gt;
+              &lt;/li&gt;
+            &lt;/ol&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;表格&lt;/p&gt;
+
+            &lt;p&gt;语法：&lt;/p&gt;
+
+            &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;表头|表头|表头
+---|:--:|---:
+内容|内容|内容
+内容|内容|内容
+         
+第二行分割表头和内容。
+- 有一个就行，为了对齐，多加了几个
+文字默认居左
+-两边加：表示文字居中
+-右边加：表示文字居右
+注：原生的语法两边都要用 | 包起来。此处省略
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;代码&lt;/p&gt;
+
+            &lt;p&gt;语法：
+单行代码：代码之间分别用一个反引号包起来&lt;/p&gt;
+
+            &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    `代码内容`
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;代码块：代码之间分别用三个反引号包起来，且两边的反引号单独占一行&lt;/p&gt;
+
+            &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(```)
+  代码...
+  代码...
+  代码...
+(```)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;流程图&lt;/p&gt;
+
+            &lt;p&gt;语法：&lt;/p&gt;
+
+            &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;```flow
+st=&amp;gt;start: 开始
+op=&amp;gt;operation: My Operation
+cond=&amp;gt;condition: Yes or No?
+e=&amp;gt;end
+st-&amp;gt;op-&amp;gt;cond
+cond(yes)-&amp;gt;e
+cond(no)-&amp;gt;op
+&amp;amp;```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;table&gt;
+              &lt;tbody&gt;
+                &lt;tr&gt;
+                  &lt;td&gt;结果：![img](https://upload-images.jianshu.io/upload_images/6860761-9d9524ba31047696.png?imageMogr2/auto-orient/strip&lt;/td&gt;
+                  &lt;td&gt;imageView2/2/w/751/format/webp)&lt;/td&gt;
+                &lt;/tr&gt;
+              &lt;/tbody&gt;
+            &lt;/table&gt;
+          &lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Mon, 02 Aug 2021 00:00:00 +0800</pubDate>
+        <link>http://yourdomain.com/clean/jekyll/update/2021/08/02/diary-for-internship-day13.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/clean/jekyll/update/2021/08/02/diary-for-internship-day13.html</guid>
+        
+        
+        <category>jekyll</category>
+        
+        <category>update</category>
+        
+      </item>
+    
+      <item>
+        <title>实习日记12</title>
+        <description>&lt;h2 id=&quot;day12&quot;&gt;Day12&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;城运大屏驻扎部署工作
+    &lt;ul&gt;
+      &lt;li&gt;Redis中如果存在bind则只能由bind的ip访问redis，否则会造成访问失效&lt;/li&gt;
+      &lt;li&gt;现存在数据不一致问题，同时已有的数据同步接口中的数据来源库为其他地方内网，无法连接，此问题有待解决&lt;/li&gt;
+      &lt;li&gt;内网穿透需要实现映射，具体实现步骤非本人实现，可以日后用自己的服务器做实验&lt;/li&gt;
+      &lt;li&gt;今天汇报完，下周还得来。。。貌似很多需求没做完，下周先弄好自动数据同步，可能需要这里能够把内网ip映射出来让我用互联网访问，不然调试太麻烦了&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 30 Jul 2021 00:00:00 +0800</pubDate>
+        <link>http://yourdomain.com/clean/jekyll/update/2021/07/30/diary-for-internship-day12.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/clean/jekyll/update/2021/07/30/diary-for-internship-day12.html</guid>
+        
+        
+        <category>jekyll</category>
+        
+        <category>update</category>
+        
+      </item>
+    
+      <item>
+        <title>实习日记11</title>
+        <description>&lt;h2 id=&quot;day11&quot;&gt;Day11&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;继续城运大屏项目的开发，周五下午三点汇报&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Thu, 29 Jul 2021 00:00:00 +0800</pubDate>
+        <link>http://yourdomain.com/clean/jekyll/update/2021/07/29/diary-for-internship-day11.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/clean/jekyll/update/2021/07/29/diary-for-internship-day11.html</guid>
+        
+        
+        <category>jekyll</category>
+        
+        <category>update</category>
+        
+      </item>
+    
+      <item>
+        <title>实习日记10</title>
+        <description>&lt;h2 id=&quot;day10&quot;&gt;Day10&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;springboot实现定时任务：
+    &lt;ul&gt;
+      &lt;li&gt;使用scheduled关键字，设置时间间隔之后即可使方法定时被调用，需要注意的是springboot使用@Scheduled关键字的方法必须是无参方法&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Wed, 28 Jul 2021 00:00:00 +0800</pubDate>
+        <link>http://yourdomain.com/clean/jekyll/update/2021/07/28/diary-for-internship-day10.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/clean/jekyll/update/2021/07/28/diary-for-internship-day10.html</guid>
+        
+        
+        <category>jekyll</category>
+        
+        <category>update</category>
+        
+      </item>
+    
+      <item>
+        <title>实习日记9</title>
+        <description>&lt;h2 id=&quot;day9&quot;&gt;Day9&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;城运大屏项目sql修改&lt;/li&gt;
+  &lt;li&gt;DataQL学习:https://www.hasor.net/doc/pages/viewpage.action?pageId=1573215&lt;/li&gt;
+  &lt;li&gt;手动数据同步更改为自动数据同步,目前还没有思路,学习到的逻辑如下:
+    &lt;ul&gt;
+      &lt;li&gt;使用spring中schedule关键字&lt;/li&gt;
+      &lt;li&gt;确定同步的数据周期,即开始时间和结束时间,其中结束时间为当时,开始时间根据数据库中是否已经有数据进行确定:
+        &lt;ul&gt;
+          &lt;li&gt;如果数据库中没有数据,则须从其他数据库中导入数据,开始时间确定为其他数据库中最早的一条数据的更新时间&lt;/li&gt;
+          &lt;li&gt;如果数据库中有对应数据,则根据update_time进行选择,可能需要记录上次同步的结束时间&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 27 Jul 2021 00:00:00 +0800</pubDate>
+        <link>http://yourdomain.com/clean/jekyll/update/2021/07/27/diary-for-internship-day9.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/clean/jekyll/update/2021/07/27/diary-for-internship-day9.html</guid>
+        
+        
+        <category>jekyll</category>
+        
+        <category>update</category>
+        
+      </item>
+    
+      <item>
+        <title>实习日记8</title>
+        <description>&lt;h2 id=&quot;day8&quot;&gt;Day8&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;城运环境前端搭建：
+    &lt;ul&gt;
+      &lt;li&gt;npm install时报错npm ERR! cb() never called!，尝试如下方法解决：
+        &lt;ul&gt;
+          &lt;li&gt;参考如下连接http://www.bubuko.com/infodetail-3620264.html，清楚缓存后安装Node helper，在n stable时无法解决bash问题，未果。&lt;/li&gt;
+          &lt;li&gt;删除package-json-lock文件和node_modules文件夹，成功&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;城运环境后端搭建：
+    &lt;ul&gt;
+      &lt;li&gt;SNAPSHOTcan not found：检查项目SDK是否为1.8版本，以及maven是否使用本地maven配置而非IDEA虚拟环境，修改后成功&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;拉错分支了，我是个傻*&lt;/li&gt;
+  &lt;li&gt;DataWay学习：https://www.oschina.net/p/dataway&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Fri, 23 Jul 2021 00:00:00 +0800</pubDate>
+        <link>http://yourdomain.com/clean/jekyll/update/2021/07/23/diary-for-internship-day8.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/clean/jekyll/update/2021/07/23/diary-for-internship-day8.html</guid>
+        
+        
+        <category>jekyll</category>
+        
+        <category>update</category>
+        
+      </item>
+    
+      <item>
+        <title>实习日记7</title>
+        <description>&lt;h2 id=&quot;day7&quot;&gt;Day7&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Mybatis-plus基本配置文档：https://mp.baomidou.com/config/generator-config.html#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;数据库架构和数据表关系学习&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;每张表拥有一个字段id或ID_作为唯一主键，存在主键为外键情况，且该主键必须非空，存在有表不以id作为主键的情况，这种情况下表不含id字段（act_id_membership)作为联系集以其两个字段统一作为主键。&lt;/li&gt;
+      &lt;li&gt;有关联的数据表：
+        &lt;ul&gt;
+          &lt;li&gt;act_id_user和act_id_group,存在联系集act_id_membership,应该是表示用户和某一用户集合（群组）&lt;/li&gt;
+          &lt;li&gt;模型相关一系列:act_re_procdef和其信息act_procdef_info,&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Redis学习：&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;Redis Stream:主要用于消息队列，提供了消息的持久化和主备复制功能，可以让客户端访问任何时候的数据，并且能记住每一个客户端的访问位置，还能保证消息不丢失。&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;Redis stream结构如下：&lt;/p&gt;
+
+            &lt;p&gt;&lt;img src=&quot;https://www.runoob.com/wp-content/uploads/2020/09/en-us_image_0167982791.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+            &lt;p&gt;每个Stream拥有唯一的名称作为Redis的key，在首次使用xadd指令追加消息时会自动创建，其中：&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;&lt;strong&gt;Consumer Group&lt;/strong&gt; ：消费组，使用 XGROUP CREATE 命令创建，一个消费组有多个消费者(Consumer)。&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;last_delivered_id&lt;/strong&gt; ：游标，每个消费组会有个游标 last_delivered_id，任意一个消费者读取了消息都会使游标 last_delivered_id 往前移动。&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;pending_ids&lt;/strong&gt; ：消费者(Consumer)的状态变量，作用是维护消费者的未确认的 id。 pending_ids 记录了当前已经被客户端读取的消息，但是还没有 ack (Acknowledge character：确认字符）。&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;消息队列相关命令如下：&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;&lt;strong&gt;XADD&lt;/strong&gt; - 添加消息到末尾&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;XTRIM&lt;/strong&gt; - 对流进行修剪，限制长度&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;XDEL&lt;/strong&gt; - 删除消息&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;XLEN&lt;/strong&gt; - 获取流包含的元素数量，即消息长度&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;XRANGE&lt;/strong&gt; - 获取消息列表，会自动过滤已经删除的消息&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;XREVRANGE&lt;/strong&gt; - 反向获取消息列表，ID 从大到小&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;XREAD&lt;/strong&gt; - 以阻塞或非阻塞方式获取消息列表&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;消费者组相关命令：&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;&lt;strong&gt;XGROUP CREATE&lt;/strong&gt; - 创建消费者组&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;XREADGROUP GROUP&lt;/strong&gt; - 读取消费者组中的消息&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;XACK&lt;/strong&gt; - 将消息标记为”已处理”&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;XGROUP SETID&lt;/strong&gt; - 为消费者组设置新的最后递送消息ID&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;XGROUP DELCONSUMER&lt;/strong&gt; - 删除消费者&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;XGROUP DESTROY&lt;/strong&gt; - 删除消费者组&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;XPENDING&lt;/strong&gt; - 显示待处理消息的相关信息&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;XCLAIM&lt;/strong&gt; - 转移消息的归属权&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;XINFO&lt;/strong&gt; - 查看流和消费者组的相关信息；&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;XINFO GROUPS&lt;/strong&gt; - 打印消费者组的信息；&lt;/li&gt;
+              &lt;li&gt;&lt;strong&gt;XINFO STREAM&lt;/strong&gt; - 打印流信息&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;具体命令详解可参考官方文档和runoob：&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;官方文档：https://redis.io/topics/streams-intro&lt;/li&gt;
+              &lt;li&gt;runoob：https://www.runoob.com/redis/redis-stream.html&lt;/li&gt;
+              &lt;li&gt;概念解释可以看这篇博客：https://www.cnblogs.com/williamjie/p/11201654.html&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Linux学习(因为没事无聊学一点)：&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;Linux启动过程：&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;p&gt;内核的引导：当计算机打开电源后，首先是BIOS开机自检，按照BIOS中设置的启动设备（通常是硬盘）来启动。&lt;/p&gt;
+
+            &lt;p&gt;操作系统接管硬件以后，首先读入 /boot 目录下的内核文件。&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;运行 init：init 进程是系统所有进程的起点，没有这个进程，系统中任何进程都不会启动。init 程序首先是需要读取配置文件 /etc/inittab。&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;
+                &lt;p&gt;运行级别：许多程序需要开机启动。它们在Windows叫做”服务”（service），在Linux就叫做”守护进程”（daemon）。&lt;/p&gt;
+
+                &lt;p&gt;init进程的一大任务，就是去运行这些开机启动的程序。&lt;/p&gt;
+
+                &lt;p&gt;但是，不同的场合需要启动不同的程序，比如用作服务器时，需要启动Apache，用作桌面就不需要。&lt;/p&gt;
+
+                &lt;p&gt;Linux允许为不同的场合，分配不同的开机启动程序，这就叫做”运行级别”（runlevel）。也就是说，启动时根据”运行级别”，确定要运行哪些程序。&lt;/p&gt;
+
+                &lt;ul&gt;
+                  &lt;li&gt;运行级别0：系统停机状态，系统默认运行级别不能设为0，否则不能正常启动&lt;/li&gt;
+                  &lt;li&gt;运行级别1：单用户工作状态，root权限，用于系统维护，禁止远程登陆&lt;/li&gt;
+                  &lt;li&gt;运行级别2：多用户状态(没有NFS)&lt;/li&gt;
+                  &lt;li&gt;运行级别3：完全的多用户状态(有NFS)，登陆后进入控制台命令行模式&lt;/li&gt;
+                  &lt;li&gt;运行级别4：系统未使用，保留&lt;/li&gt;
+                  &lt;li&gt;运行级别5：X11控制台，登陆后进入图形GUI模式&lt;/li&gt;
+                  &lt;li&gt;运行级别6：系统正常关闭并重启，默认运行级别不能设为6，否则不能正常启动&lt;/li&gt;
+                &lt;/ul&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;系统初始化：在init的配置文件中有这么一行： si::sysinit:/etc/rc.d/rc.sysinit　它调用执行了/etc/rc.d/rc.sysinit，而rc.sysinit是一个bash shell的脚本，它主要是完成一些系统初始化的工作，rc.sysinit是每一个运行级别都要首先运行的重要脚本。它主要完成的工作有：激活交换分区，检查磁盘，加载硬件模块以及其它一些需要优先执行任务。&lt;/p&gt;
+
+            &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;l5:5:wait:/etc/rc.d/rc 5
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
+
+            &lt;p&gt;这一行表示以5为参数运行/etc/rc.d/rc，/etc/rc.d/rc是一个Shell脚本，它接受5作为参数，去执行/etc/rc.d/rc5.d/目录下的所有的rc启动脚本，/etc/rc.d/rc5.d/目录中的这些启动脚本实际上都是一些连接文件，而不是真正的rc启动脚本，真正的rc启动脚本实际上都是放在/etc/rc.d/init.d/目录下。&lt;/p&gt;
+
+            &lt;p&gt;而这些rc启动脚本有着类似的用法，它们一般能接受start、stop、restart、status等参数。&lt;/p&gt;
+
+            &lt;p&gt;/etc/rc.d/rc5.d/中的rc启动脚本通常是K或S开头的连接文件，对于以 S 开头的启动脚本，将以start参数来运行。&lt;/p&gt;
+
+            &lt;p&gt;而如果发现存在相应的脚本也存在K打头的连接，而且已经处于运行态了(以/var/lock/subsys/下的文件作为标志)，则将首先以stop为参数停止这些已经启动了的守护进程，然后再重新运行。&lt;/p&gt;
+
+            &lt;p&gt;这样做是为了保证是当init改变运行级别时，所有相关的守护进程都将重启。&lt;/p&gt;
+
+            &lt;p&gt;至于在每个运行级中将运行哪些守护进程，用户可以通过chkconfig或setup中的”System Services”来自行设定。&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;建立终端 ：rc执行完毕后，返回init。这时基本系统环境已经设置好了，各种守护进程也已经启动了。init接下来会打开6个终端，以便用户登录系统。&lt;/p&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;用户登录系统：一般来说，用户的登录方式有三种：&lt;/p&gt;
+
+            &lt;ul&gt;
+              &lt;li&gt;（1）命令行登录&lt;/li&gt;
+              &lt;li&gt;（2）ssh登录&lt;/li&gt;
+              &lt;li&gt;（3）图形界面登录&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;p&gt;具体流程图：&lt;img src=&quot;https://www.runoob.com/wp-content/uploads/2014/06/bg2013081706.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;Linux关机：在linux领域内大多用在服务器上，很少遇到关机的操作。毕竟服务器上跑一个服务是永无止境的，除非特殊情况下，不得已才会关机。&lt;/p&gt;
+
+        &lt;p&gt;正确的关机流程为：sync &amp;gt; shutdown &amp;gt; reboot &amp;gt; halt&lt;/p&gt;
+
+        &lt;p&gt;关机指令为：shutdown ，你可以man shutdown 来看一下帮助文档。&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;明天开始要干活儿，可能会有数据同步的工作，明天再记。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Thu, 22 Jul 2021 00:00:00 +0800</pubDate>
+        <link>http://yourdomain.com/clean/jekyll/update/2021/07/22/diary-for-internship-day7.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/clean/jekyll/update/2021/07/22/diary-for-internship-day7.html</guid>
+        
+        
+        <category>jekyll</category>
+        
+        <category>update</category>
+        
+      </item>
+    
+      <item>
+        <title>实习日记6</title>
+        <description>&lt;h2 id=&quot;day6&quot;&gt;Day6&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;前端环境搭建：
+    &lt;ul&gt;
+      &lt;li&gt;依赖安装时出现exit code 128:远端问题，尝试方案如下：
+        &lt;ul&gt;
+          &lt;li&gt;删除用户缓存和已安装依赖，无果&lt;/li&gt;
+          &lt;li&gt;可能是文件名过长，git有可以创建4096长度的文件名，然而在windows最多是260，因为git用了旧版本的windows api，设置git config –global core.longpaths true，无果&lt;/li&gt;
+          &lt;li&gt;直接复制现有的node_module&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;运行时出现问题：Missing Binging，尝试方案如下：
+        &lt;ul&gt;
+          &lt;li&gt;npm rebuild node-sass，失败&lt;/li&gt;
+          &lt;li&gt;发现本地Node.js为32位，与x64不兼容，下载64位Node.js，成功&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;后端环境搭建：
+    &lt;ul&gt;
+      &lt;li&gt;maven安装依赖出现问题，需要查看JDK版本是否一致，否则会出现无法识别依赖的情况&lt;/li&gt;
+      &lt;li&gt;如果maven依赖未识别到，可以删除本地maven仓库，再重新下载。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;mybatisplus学习&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Wed, 21 Jul 2021 00:00:00 +0800</pubDate>
+        <link>http://yourdomain.com/clean/jekyll/update/2021/07/21/diary-for-internship-day6.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/clean/jekyll/update/2021/07/21/diary-for-internship-day6.html</guid>
+        
+        
+        <category>jekyll</category>
+        
+        <category>update</category>
+        
+      </item>
+    
+      <item>
+        <title>实习日记5</title>
+        <description>&lt;h2 id=&quot;day5&quot;&gt;Day5&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;开发手册学习：
+    &lt;ul&gt;
+      &lt;li&gt;数据库索引规约：
+        &lt;ul&gt;
+          &lt;li&gt;唯一索引影响的insert速度损耗可以忽略，但会明显提高查找速度，另外，即使在应用层做了非常完善的校验控制，只要没有唯一索引，根据墨菲定律，就必然有脏数据生成。&lt;/li&gt;
+          &lt;li&gt;在varchar字段上建立索引时，必须指定索引长度，没必要对全字段建立索引，根据实际文本区分度决定索引长度即可。索引的长度与区分度是一对矛盾体，一般对于字符串类型数据，长度为20的索引，区分度会高达90%以上，可以使用count(distinct left(列名，索引长度))/count(*)的区分度来确定&lt;/li&gt;
+          &lt;li&gt;页面所搜严禁做模糊或者全模糊，如果需要，通过搜索引擎来解决，因为索引文件具有B-Tree的最左前缀匹配特性，如果左边的值未确定，那么无法使用此索引。&lt;/li&gt;
+          &lt;li&gt;SQL性能优化的目标：至少达到range级别，要求是ref级别，最好是consts级别。
+            &lt;ul&gt;
+              &lt;li&gt;consts级别是指单表中最多只有一个匹配行(主键或者唯一索引，在优化阶段即可读取到数据)&lt;/li&gt;
+              &lt;li&gt;ref级别是指使用普通的索引(normal index)&lt;/li&gt;
+              &lt;li&gt;range级别是指对索引进行范围检索&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+          &lt;li&gt;count()会值为NULL的行，而count(列名)不会统计此列值为NULL的行，所以不要使用count(列名)或count(常量)来替代count(*)&lt;/li&gt;
+          &lt;li&gt;SQL中使用ISNULL()判断是否为NULL值，因为NULL与任何值的直接比较都为NULL。&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;源代码学习：
+    &lt;ul&gt;
+      &lt;li&gt;mybatisplus:
+        &lt;ul&gt;
+          &lt;li&gt;条件构造器(wrapper):
+            &lt;ul&gt;
+              &lt;li&gt;说明：
+                &lt;ul&gt;
+                  &lt;li&gt;以下出现的第一个入参&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;boolean condition&lt;/code&gt;表示该条件&lt;strong&gt;是否&lt;/strong&gt;加入最后生成的sql中，例如：query.like(StringUtils.isNotBlank(name), Entity::getName, name) .eq(age!=null &amp;amp;&amp;amp; age &amp;gt;= 0, Entity::getAge, age)&lt;/li&gt;
+                  &lt;li&gt;以下代码块内的多个方法均为从上往下补全个别&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;boolean&lt;/code&gt;类型的入参,默认为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;true&lt;/code&gt;&lt;/li&gt;
+                  &lt;li&gt;以下出现的泛型&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Param&lt;/code&gt;均为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Wrapper&lt;/code&gt;的子类实例(均具有&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AbstractWrapper&lt;/code&gt;的所有方法)&lt;/li&gt;
+                  &lt;li&gt;以下方法在入参中出现的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;R&lt;/code&gt;为泛型,在普通wrapper中是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;String&lt;/code&gt;,在LambdaWrapper中是&lt;strong&gt;函数&lt;/strong&gt;(例:&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Entity::getId&lt;/code&gt;,&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Entity&lt;/code&gt;为实体类,&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;getId&lt;/code&gt;为字段&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;id&lt;/code&gt;的&lt;strong&gt;getMethod&lt;/strong&gt;)&lt;/li&gt;
+                  &lt;li&gt;以下方法入参中的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;R column&lt;/code&gt;均表示数据库字段,当&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;R&lt;/code&gt;具体类型为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;String&lt;/code&gt;时则为数据库字段名(&lt;strong&gt;字段名是数据库关键字的自己用转义符包裹!&lt;/strong&gt;)!而不是实体类数据字段名!!!,另当&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;R&lt;/code&gt;具体类型为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SFunction&lt;/code&gt;时项目runtime不支持eclipse自家的编译器!!!&lt;/li&gt;
+                  &lt;li&gt;以下举例均为使用普通wrapper,入参为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Map&lt;/code&gt;和&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;List&lt;/code&gt;的均以&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;json&lt;/code&gt;形式表现!&lt;/li&gt;
+                  &lt;li&gt;使用中如果入参的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Map&lt;/code&gt;或者&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;List&lt;/code&gt;为&lt;strong&gt;空&lt;/strong&gt;,则不会加入最后生成的sql中!!!&lt;/li&gt;
+                &lt;/ul&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;根据数据表类型分别调用不同的DAO实现，如果是树形结构则调用ITree，反之调用IAdv&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 20 Jul 2021 00:00:00 +0800</pubDate>
+        <link>http://yourdomain.com/clean/jekyll/update/2021/07/20/diary-for-internship-day5.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/clean/jekyll/update/2021/07/20/diary-for-internship-day5.html</guid>
+        
+        
+        <category>jekyll</category>
+        
+        <category>update</category>
+        
+      </item>
+    
+  </channel>
+</rss>

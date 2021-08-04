@@ -1,0 +1,11 @@
+# Site settings
+title: Thumbby's Blog
+email: 254091042@qq.com
+description: > # this means to ignore newlines until "baseurl:"
+  随便记录自己的即将开始(或者根本不会开始)的程序猿生活
+baseurl: "/blog" # the subpath of your site, e.g. /blog/
+url: "http://Thumbby.github.io" # the base hostname & protocol for your site
+github_username:  Thumbby
+
+# Build settings
+markdown: kramdown

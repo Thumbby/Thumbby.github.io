@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>实习日记9</title>
+  <meta name="description" content="Day9">
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:600' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/clean/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/clean/jekyll/update/2021/07/27/diary-for-internship-day9.html">
+  <link rel="alternate" type="application/rss+xml" title="Thumbby's Blog" href="http://yourdomain.com/clean/feed.xml" />
+</head>
+
+<style>
+  table{
+    border-left:1px solid #000000;border-top:1px solid #000000;
+    width: 100%;
+    word-wrap:break-word; word-break:break-all;
+  }
+  table th{
+  text-align:center;
+  }
+  table th,td{
+    border-right:1px solid #000000;border-bottom:1px solid #000000;
+  }
+</style>
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/clean/">Thumbby's Blog</a>
+
+    <nav class="site-nav">
+        
+          
+          <a class="page-link" href="/clean/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">实习日记9</h1>
+    <p class="post-meta">Jul 27, 2021</p>
+  </header>
+
+  <article class="post-content">
+    <h2 id="day9">Day9</h2>
+
+<ul>
+  <li>城运大屏项目sql修改</li>
+  <li>DataQL学习:https://www.hasor.net/doc/pages/viewpage.action?pageId=1573215</li>
+  <li>手动数据同步更改为自动数据同步,目前还没有思路,学习到的逻辑如下:
+    <ul>
+      <li>使用spring中schedule关键字</li>
+      <li>确定同步的数据周期,即开始时间和结束时间,其中结束时间为当时,开始时间根据数据库中是否已经有数据进行确定:
+        <ul>
+          <li>如果数据库中没有数据,则须从其他数据库中导入数据,开始时间确定为其他数据库中最早的一条数据的更新时间</li>
+          <li>如果数据库中有对应数据,则根据update_time进行选择,可能需要记录上次同步的结束时间</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+  </article>
+
+</div>
+
+    </div>
+
+  </body>
+
+</html>

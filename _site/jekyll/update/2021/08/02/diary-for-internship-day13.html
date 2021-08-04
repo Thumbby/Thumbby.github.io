@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>实习日记13</title>
+  <meta name="description" content="Day13">
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:600' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/clean/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/clean/jekyll/update/2021/08/02/diary-for-internship-day13.html">
+  <link rel="alternate" type="application/rss+xml" title="Thumbby's Blog" href="http://yourdomain.com/clean/feed.xml" />
+</head>
+
+<style>
+  table{
+    border-left:1px solid #000000;border-top:1px solid #000000;
+    width: 100%;
+    word-wrap:break-word; word-break:break-all;
+  }
+  table th{
+  text-align:center;
+  }
+  table th,td{
+    border-right:1px solid #000000;border-bottom:1px solid #000000;
+  }
+</style>
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/clean/">Thumbby's Blog</a>
+
+    <nav class="site-nav">
+        
+          
+          <a class="page-link" href="/clean/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">实习日记13</h1>
+    <p class="post-meta">Aug 2, 2021</p>
+  </header>
+
+  <article class="post-content">
+    <h2 id="day13">Day13</h2>
+
+<ul>
+  <li>
+    <p>继续城运大屏定时任务的开发</p>
+  </li>
+  <li>
+    <p>赶回东方体育中心</p>
+  </li>
+  <li>
+    <p>Swagger学习：</p>
+
+    <ol>
+      <li>
+        <p>使用SpringBoot集成Swagger2构建Restful API</p>
+
+        <ol>
+          <li>
+            <p>引用相关jar包，使用maven在pom.xml中引入相关依赖：</p>
+
+            <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>io.springfox<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>springfox-swagger2<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.4.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>io.springfox<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>springfox-swagger-ui<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.4.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>创建swagger的配置类</p>
+
+            <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.xingguo.springboot</span><span class="o">;</span>
+         
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Bean</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.annotation.Configuration</span><span class="o">;</span>
+         
+<span class="kn">import</span> <span class="nn">springfox.documentation.builders.ApiInfoBuilder</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">springfox.documentation.builders.PathSelectors</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">springfox.documentation.builders.RequestHandlerSelectors</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">springfox.documentation.service.ApiInfo</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">springfox.documentation.service.Contact</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">springfox.documentation.spi.DocumentationType</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">springfox.documentation.spring.web.plugins.Docket</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">springfox.documentation.swagger2.annotations.EnableSwagger2</span><span class="o">;</span>
+         
+<span class="nd">@Configuration</span>
+<span class="nd">@EnableSwagger2</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Swagger2Configuration</span> <span class="o">{</span>
+         
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">Docket</span> <span class="nf">buildDocket</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Docket</span><span class="o">(</span><span class="nc">DocumentationType</span><span class="o">.</span><span class="na">SWAGGER_2</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">apiInfo</span><span class="o">(</span><span class="n">buildApiInf</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">select</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">apis</span><span class="o">(</span><span class="nc">RequestHandlerSelectors</span><span class="o">.</span><span class="na">basePackage</span><span class="o">(</span><span class="s">"com.xingguo.springboot.controller"</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">paths</span><span class="o">(</span><span class="nc">PathSelectors</span><span class="o">.</span><span class="na">any</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+    <span class="o">}</span>
+         
+    <span class="kd">private</span> <span class="nc">ApiInfo</span> <span class="nf">buildApiInf</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">ApiInfoBuilder</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">title</span><span class="o">(</span><span class="s">"标题"</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">description</span><span class="o">(</span><span class="s">"springboot swagger2"</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">termsOfServiceUrl</span><span class="o">(</span><span class="s">"网址链接"</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">contact</span><span class="o">(</span><span class="k">new</span> <span class="nc">Contact</span><span class="o">(</span><span class="s">"diaoxingguo"</span><span class="o">,</span> <span class="s">"http://blog.csdn.net/u014231523"</span><span class="o">,</span> <span class="s">"diaoxingguo@163.com"</span><span class="o">))</span>
+                    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+         
+    <span class="o">}</span>
+         
+<span class="o">}</span>
+</code></pre></div>            </div>
+
+            <p>在原来2.2.0的版本中使用new ApiInfo()的方法已经过时，使用new ApiInfoBuilder()进行构造，需要什么参数就添加什么参数。当然也可以什么都添加。如：</p>
+
+            <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="nc">ApiInfo</span> <span class="nf">buildApiInfo</span><span class="o">(){</span>
+ <span class="k">return</span> <span class="k">new</span> <span class="nf">ApiInfoBuilder</span><span class="o">().</span><span class="na">build</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div>            </div>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <p>注解说明</p>
+
+        <ol>
+          <li>
+            <p>用于controller上：</p>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>注解</th>
+                  <th>说明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>@Api</td>
+                  <td>对请求类的说明</td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+          <li>
+            <p>用于方法上(说明参数的含义)：</p>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>注解</th>
+                  <th>说明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>@ApiOperation</td>
+                  <td>方法的说明</td>
+                </tr>
+                <tr>
+                  <td>@ApiImplicitParams、@ApiImplicitParam</td>
+                  <td>方法的参数的说明；@ApiImplicitParams 用于指定单个参数的说明</td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+          <li>
+            <p>用于方法上(返回参数或对象的说明)</p>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>注释</th>
+                  <th>说明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>@ApiResponses、@ApiResponse方法返回值的说明</td>
+                  <td>@ApiResponses 用于指定单个参数的说明</td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+          <li>
+            <p>对象类</p>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>注解</th>
+                  <th>说明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>@ApiModel</td>
+                  <td>用在JavaBean类上，说明JavaBean的用途</td>
+                </tr>
+                <tr>
+                  <td>@ApiModelProperty</td>
+                  <td>用在JavaBean类的属性上面，说明此属性的的含议</td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <p>各注解的参数及说明：</p>
+
+        <ol>
+          <li>
+            <p>@Api：请求类的说明</p>
+
+            <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Api</span><span class="err">：</span><span class="n">放在</span> <span class="n">请求的类上</span><span class="err">，</span><span class="n">与</span> <span class="nd">@Controller</span> <span class="n">并列</span><span class="err">，</span><span class="n">说明类的作用</span><span class="err">，</span><span class="n">如用户模块</span><span class="err">，</span><span class="n">订单类等</span><span class="err">。</span>
+	<span class="n">tags</span><span class="o">=</span><span class="s">"说明该类的作用"</span>
+	<span class="n">value</span><span class="o">=</span><span class="s">"该参数没什么意义，所以不需要配置"</span>
+</code></pre></div>            </div>
+
+            <p>属性配置：</p>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>属性名称</th>
+                  <th>备注</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>value</td>
+                  <td>url的路径值</td>
+                </tr>
+                <tr>
+                  <td>tags</td>
+                  <td>如果设置这个值，value的值会被覆盖</td>
+                </tr>
+                <tr>
+                  <td>description</td>
+                  <td>对api资源的描述</td>
+                </tr>
+                <tr>
+                  <td>basePath</td>
+                  <td>基本路径</td>
+                </tr>
+                <tr>
+                  <td>position</td>
+                  <td>如果配置多个Api可以改变展示的顺序</td>
+                </tr>
+                <tr>
+                  <td>produces</td>
+                  <td>如, “application/json, application/xml”</td>
+                </tr>
+                <tr>
+                  <td>consumes</td>
+                  <td>如, “application/json, application/xml”</td>
+                </tr>
+                <tr>
+                  <td>protocols</td>
+                  <td>协议类型，如: http, https, ws, wss.</td>
+                </tr>
+                <tr>
+                  <td>authorizations</td>
+                  <td>高级特性认证时配置</td>
+                </tr>
+                <tr>
+                  <td>hidden</td>
+                  <td>配置为true则在文件中隐藏</td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+          <li>
+            <p>@ApiOperation：方法的说明</p>
+
+            <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ApiOperation</span><span class="err">：</span><span class="s">"用在请求的方法上，说明方法的作用"</span>
+	<span class="n">value</span><span class="o">=</span><span class="s">"说明方法的作用"</span>
+	<span class="n">notes</span><span class="o">=</span><span class="s">"方法的备注说明"</span>
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>@ApiImplicitParams，@ApilmplicitParam：方法参数的说明</p>
+
+            <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ApiImplicitParams</span><span class="err">：</span><span class="n">用在请求的方法上</span><span class="err">，</span><span class="n">包含一组参数说明</span>
+	<span class="nd">@ApiImplicitParam</span><span class="err">：</span><span class="n">对单个参数的说明</span>	    
+	    <span class="n">name</span><span class="err">：</span><span class="n">参数名</span>
+	    <span class="n">value</span><span class="err">：</span><span class="n">参数的说明</span><span class="err">、</span><span class="n">描述</span>
+	    <span class="n">required</span><span class="err">：</span><span class="n">参数是否必须必填</span>
+	    <span class="n">paramType</span><span class="err">：</span><span class="n">参数放在哪个地方</span>
+	        <span class="err">·</span> <span class="n">query</span> <span class="o">--&gt;</span> <span class="n">请求参数的获取</span><span class="err">：</span><span class="nd">@RequestParam</span>
+	        <span class="err">·</span> <span class="n">header</span> <span class="o">--&gt;</span> <span class="n">请求参数的获取</span><span class="err">：</span><span class="nd">@RequestHeader</span>	      
+	        <span class="err">·</span> <span class="n">path</span><span class="err">（</span><span class="n">用于restful接口</span><span class="err">）</span><span class="o">--&gt;</span> <span class="n">请求参数的获取</span><span class="err">：</span><span class="nd">@PathVariable</span>
+	        <span class="err">·</span> <span class="n">body</span><span class="err">（</span><span class="n">请求体</span><span class="err">）</span><span class="o">--&gt;</span>  <span class="nd">@RequestBody</span> <span class="nc">User</span> <span class="n">user</span>
+	        <span class="err">·</span> <span class="n">form</span><span class="err">（</span><span class="n">普通表单提交</span><span class="err">）</span>	   
+	    <span class="n">dataType</span><span class="err">：</span><span class="n">参数类型</span><span class="err">，</span><span class="n">默认String</span><span class="err">，</span><span class="n">其它值dataType</span><span class="o">=</span><span class="s">"Integer"</span>	   
+	    <span class="n">defaultValue</span><span class="err">：</span><span class="n">参数的默认值</span>
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>@ApiResponses、@ApiResponse：方法返回值的状态码说明：</p>
+
+            <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ApiResponses</span><span class="err">：</span><span class="n">方法返回对象的说明</span>
+	<span class="nd">@ApiResponse</span><span class="err">：</span><span class="n">每个参数的说明</span>
+	    <span class="n">code</span><span class="err">：</span><span class="n">数字</span><span class="err">，</span><span class="n">例如400</span>
+	    <span class="n">message</span><span class="err">：</span><span class="n">信息</span><span class="err">，</span><span class="n">例如</span><span class="s">"请求参数没填好"</span>
+	    <span class="n">response</span><span class="err">：</span><span class="n">抛出异常的类</span>
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>@ApiModel：用于JavaBean上，表示对JavaBean的功能描述</p>
+
+            <p>主要用处有两个：</p>
+
+            <ol>
+              <li>
+                <p>当请求数据描述，即@RequestBody时，用于封装请求(包括数据的各种校验)数据；</p>
+
+                <p>例：</p>
+
+                <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@ApiModel(description = "用户登录")
+public class UserLoginVO implements Serializable {
+            
+	private static final long serialVersionUID = 1L;
+            
+	@ApiModelProperty(value = "用户名",required=true)	
+	private String username;
+            
+	@ApiModelProperty(value = "密码",required=true)	
+	private String password;
+            	
+	// getter/setter省略
+}
+</code></pre></div>                </div>
+
+                <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Api</span><span class="o">(</span><span class="n">tags</span><span class="o">=</span><span class="s">"用户模块"</span><span class="o">)</span>
+<span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserController</span> <span class="o">{</span>
+            
+	<span class="nd">@ApiOperation</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"用户登录"</span><span class="o">,</span> <span class="n">notes</span> <span class="o">=</span> <span class="s">""</span><span class="o">)</span>	
+	<span class="nd">@PostMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/login"</span><span class="o">)</span>
+	<span class="kd">public</span> <span class="no">R</span> <span class="nf">login</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">UserLoginVO</span> <span class="n">userLoginVO</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">User</span> <span class="n">user</span><span class="o">=</span><span class="n">userSerivce</span><span class="o">.</span><span class="na">login</span><span class="o">(</span><span class="n">userLoginVO</span><span class="o">);</span>
+		<span class="k">return</span> <span class="no">R</span><span class="o">.</span><span class="na">okData</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>                </div>
+
+                <p><img src="https://img-blog.csdnimg.cn/20191227165035627.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3hpYW9qaW4yMWNlbg==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p>
+              </li>
+              <li>
+                <p>当响应值是对象时，即 @ResponseBody时，用于返回值对象的描述。</p>
+
+                <p>例：</p>
+
+                <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ApiModel</span><span class="o">(</span><span class="n">description</span><span class="o">=</span> <span class="s">"返回响应数据"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RestMessage</span> <span class="kd">implements</span> <span class="nc">Serializable</span><span class="o">{</span>
+            
+	<span class="nd">@ApiModelProperty</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"是否成功"</span><span class="o">,</span><span class="n">required</span><span class="o">=</span><span class="kc">true</span><span class="o">)</span>
+	<span class="kd">private</span> <span class="kt">boolean</span> <span class="n">success</span><span class="o">=</span><span class="kc">true</span><span class="o">;</span>	
+            	
+	<span class="nd">@ApiModelProperty</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"错误码"</span><span class="o">)</span>
+	<span class="kd">private</span> <span class="nc">Integer</span> <span class="n">errCode</span><span class="o">;</span>
+            	
+	<span class="nd">@ApiModelProperty</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"提示信息"</span><span class="o">)</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">message</span><span class="o">;</span>
+            	
+    <span class="nd">@ApiModelProperty</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"数据"</span><span class="o">)</span>
+	<span class="kd">private</span> <span class="nc">Object</span> <span class="n">data</span><span class="o">;</span>
+            		
+	<span class="cm">/* getter/setter 略*/</span>
+<span class="o">}</span>
+</code></pre></div>                </div>
+              </li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <p>Markdown语法学习</p>
+
+        <ol>
+          <li>
+            <p>标题</p>
+
+            <p>在想要设置为标题的文字前面加#来表示
+一个#是一级标题，二个#是二级标题，以此类推。支持六级标题。</p>
+
+            <p>注：标准语法一般在#后跟个空格再写文字，貌似简书不加空格也行。</p>
+
+            <p>示例：</p>
+
+            <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 这是一级标题
+## 这是二级标题
+### 这是三级标题
+#### 这是四级标题
+##### 这是五级标题
+###### 这是六级标题
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>字体</p>
+
+            <ul>
+              <li>加粗</li>
+            </ul>
+
+            <p>要加粗的文字左右分别用两个*号包起来</p>
+
+            <ul>
+              <li>斜体</li>
+            </ul>
+
+            <p>要倾斜的文字左右分别用一个*号包起来</p>
+
+            <ul>
+              <li>斜体加粗</li>
+            </ul>
+
+            <p>要倾斜和加粗的文字左右分别用三个*号包起来</p>
+
+            <ul>
+              <li>删除线</li>
+            </ul>
+
+            <p>要加删除线的文字左右分别用两个~~号包起来</p>
+
+            <p>示例：</p>
+
+            <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>**这是加粗的文字**
+*这是倾斜的文字*`
+***这是斜体加粗的文字***
+~~这是加删除线的文字~~
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>引用</p>
+
+            <p>在引用的文字前加&gt;即可。引用也可以嵌套，如加两个»三个»&gt;n个…</p>
+
+            <p>示例：</p>
+
+            <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;这是引用的内容
+&gt;&gt;这是引用的内容
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;这是引用的内容
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>分割线</p>
+
+            <p>三个或者三个以上的 - 或者 * 都可以。</p>
+
+            <p>示例：</p>
+
+            <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
+----
+***
+*****
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>图片</p>
+
+            <p>语法：</p>
+
+            <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![图片alt](图片地址 ''图片title'')
+         
+图片alt就是显示在图片下面的文字，相当于对图片内容的解释。
+图片title是图片的标题，当鼠标移到图片上时显示的内容。title可加可不加
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>超链接</p>
+
+            <p>语法：</p>
+
+            <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[超链接名](超链接地址 "超链接title")
+title可加可不加
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>列表</p>
+
+            <ol>
+              <li>
+                <p>无序列表</p>
+
+                <p>无序列表用 - + * 任何一种都可以</p>
+
+                <p>语法：</p>
+
+                <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- 列表内容
++ 列表内容
+* 列表内容
+            
+注意：- + * 跟内容之间都要有一个空格
+</code></pre></div>                </div>
+              </li>
+              <li>
+                <p>有序列表</p>
+
+                <p>语法：
+数字加点</p>
+
+                <p>语法：</p>
+
+                <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. 列表内容
+2. 列表内容
+3. 列表内容
+            
+注意：序号跟内容之间要有空格
+</code></pre></div>                </div>
+              </li>
+              <li>
+                <p>列表嵌套</p>
+
+                <p>上一级和下一级之间敲三个空格即可</p>
+              </li>
+            </ol>
+          </li>
+          <li>
+            <p>表格</p>
+
+            <p>语法：</p>
+
+            <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>表头|表头|表头
+---|:--:|---:
+内容|内容|内容
+内容|内容|内容
+         
+第二行分割表头和内容。
+- 有一个就行，为了对齐，多加了几个
+文字默认居左
+-两边加：表示文字居中
+-右边加：表示文字居右
+注：原生的语法两边都要用 | 包起来。此处省略
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>代码</p>
+
+            <p>语法：
+单行代码：代码之间分别用一个反引号包起来</p>
+
+            <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    `代码内容`
+</code></pre></div>            </div>
+
+            <p>代码块：代码之间分别用三个反引号包起来，且两边的反引号单独占一行</p>
+
+            <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(```)
+  代码...
+  代码...
+  代码...
+(```)
+</code></pre></div>            </div>
+          </li>
+          <li>
+            <p>流程图</p>
+
+            <p>语法：</p>
+
+            <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```flow
+st=&gt;start: 开始
+op=&gt;operation: My Operation
+cond=&gt;condition: Yes or No?
+e=&gt;end
+st-&gt;op-&gt;cond
+cond(yes)-&gt;e
+cond(no)-&gt;op
+&amp;```
+</code></pre></div>            </div>
+
+            <table>
+              <tbody>
+                <tr>
+                  <td>结果：![img](https://upload-images.jianshu.io/upload_images/6860761-9d9524ba31047696.png?imageMogr2/auto-orient/strip</td>
+                  <td>imageView2/2/w/751/format/webp)</td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+
+  </article>
+
+</div>
+
+    </div>
+
+  </body>
+
+</html>

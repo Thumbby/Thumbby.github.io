@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>我的第一篇博客</title>
+  <meta name="description" content="我的第一篇博客记录一下使用jekyll更新个人博客的教程吧">
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:600' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/clean/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/clean/jekyll/update/2021/07/15/my-first-blog.html">
+  <link rel="alternate" type="application/rss+xml" title="Thumbby's Blog" href="http://yourdomain.com/clean/feed.xml" />
+</head>
+
+<style>
+  table{
+    border-left:1px solid #000000;border-top:1px solid #000000;
+    width: 100%;
+    word-wrap:break-word; word-break:break-all;
+  }
+  table th{
+  text-align:center;
+  }
+  table th,td{
+    border-right:1px solid #000000;border-bottom:1px solid #000000;
+  }
+</style>
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/clean/">Thumbby's Blog</a>
+
+    <nav class="site-nav">
+        
+          
+          <a class="page-link" href="/clean/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">我的第一篇博客</h1>
+    <p class="post-meta">Jul 15, 2021</p>
+  </header>
+
+  <article class="post-content">
+    <h4 id="我的第一篇博客记录一下使用jekyll更新个人博客的教程吧">我的第一篇博客记录一下使用jekyll更新个人博客的教程吧</h4>
+
+<h3 id="1安装jekll">1.安装jekll</h3>
+
+<h4 id="11安装rubydevkit">1.1安装ruby+Devkit</h4>
+
+<p>前往官网https://rubyinstaller.org/downloads/下载RubyInstaller with devkit，这里使用的是2.7.4版本，安装完后finish页面的那个可以不选，但msys2一定要安装</p>
+
+<h4 id="12验证ruby和gem是否安装">1.2验证ruby和gem是否安装</h4>
+
+<p>输入ruby -v和gem -v有版本号即可，一般来说如果安装了wiht devkit的RubyInstaller好像无需手动装RubyGem</p>
+
+<h4 id="13安装jekyll">1.3安装jekyll</h4>
+
+<p>gem install jekyll，安装好后输入jekyll -version验证即可</p>
+
+<h3 id="2创建一个新的项目">2.创建一个新的项目</h3>
+
+<h4 id="21自己创建新的项目">2.1自己创建新的项目</h4>
+
+<p>输入jekyll new myblog，如果卡住则ctrl+c停止批处理，然后把新创建的项目文件中的source更改即可</p>
+
+<h4 id="22使用模板创建新的项目">2.2使用模板创建新的项目</h4>
+
+<p>推荐网址：http://jekyllthemes.org</p>
+
+<h4 id="23运行项目">2.3运行项目</h4>
+
+<p>在项目根目录使用jekyll server即可运行项目，默认4000端口</p>
+
+<h4 id="24更改博客设置">2.4更改博客设置</h4>
+
+<p>在_config.yml中可自定义博客基础设置</p>
+
+<h3 id="3上传帖子">3.上传帖子</h3>
+
+<h4 id="31上传新帖子">3.1上传新帖子</h4>
+
+<p>如果使用本模板，需要保证在帖子顶部有相应的YAML Front Matter，然后把md文件放入_posts目录即可，保证md文件名中不出现中文</p>
+
+<h4 id="32md文件规范">3.2md文件规范</h4>
+
+<p>本人使用的是Typora来写文件，Typora自带的有序列表似乎在页面显示的时候会出现问题，推荐自己实现或使用无序列表</p>
+
+  </article>
+
+</div>
+
+    </div>
+
+  </body>
+
+</html>

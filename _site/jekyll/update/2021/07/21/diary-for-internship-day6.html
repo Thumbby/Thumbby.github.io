@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>实习日记6</title>
+  <meta name="description" content="Day6">
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:600' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/clean/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/clean/jekyll/update/2021/07/21/diary-for-internship-day6.html">
+  <link rel="alternate" type="application/rss+xml" title="Thumbby's Blog" href="http://yourdomain.com/clean/feed.xml" />
+</head>
+
+<style>
+  table{
+    border-left:1px solid #000000;border-top:1px solid #000000;
+    width: 100%;
+    word-wrap:break-word; word-break:break-all;
+  }
+  table th{
+  text-align:center;
+  }
+  table th,td{
+    border-right:1px solid #000000;border-bottom:1px solid #000000;
+  }
+</style>
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/clean/">Thumbby's Blog</a>
+
+    <nav class="site-nav">
+        
+          
+          <a class="page-link" href="/clean/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">实习日记6</h1>
+    <p class="post-meta">Jul 21, 2021</p>
+  </header>
+
+  <article class="post-content">
+    <h2 id="day6">Day6</h2>
+
+<ul>
+  <li>前端环境搭建：
+    <ul>
+      <li>依赖安装时出现exit code 128:远端问题，尝试方案如下：
+        <ul>
+          <li>删除用户缓存和已安装依赖，无果</li>
+          <li>可能是文件名过长，git有可以创建4096长度的文件名，然而在windows最多是260，因为git用了旧版本的windows api，设置git config –global core.longpaths true，无果</li>
+          <li>直接复制现有的node_module</li>
+        </ul>
+      </li>
+      <li>运行时出现问题：Missing Binging，尝试方案如下：
+        <ul>
+          <li>npm rebuild node-sass，失败</li>
+          <li>发现本地Node.js为32位，与x64不兼容，下载64位Node.js，成功</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>后端环境搭建：
+    <ul>
+      <li>maven安装依赖出现问题，需要查看JDK版本是否一致，否则会出现无法识别依赖的情况</li>
+      <li>如果maven依赖未识别到，可以删除本地maven仓库，再重新下载。</li>
+    </ul>
+  </li>
+  <li>mybatisplus学习</li>
+</ul>
+
+
+  </article>
+
+</div>
+
+    </div>
+
+  </body>
+
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>实习日记14</title>
+  <meta name="description" content="Day14">
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:600' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/clean/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/clean/jekyll/update/2021/08/03/diary-for-internship-day14.html">
+  <link rel="alternate" type="application/rss+xml" title="Thumbby's Blog" href="http://yourdomain.com/clean/feed.xml" />
+</head>
+
+<style>
+  table{
+    border-left:1px solid #000000;border-top:1px solid #000000;
+    width: 100%;
+    word-wrap:break-word; word-break:break-all;
+  }
+  table th{
+  text-align:center;
+  }
+  table th,td{
+    border-right:1px solid #000000;border-bottom:1px solid #000000;
+  }
+</style>
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/clean/">Thumbby's Blog</a>
+
+    <nav class="site-nav">
+        
+          
+          <a class="page-link" href="/clean/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">实习日记14</h1>
+    <p class="post-meta">Aug 3, 2021</p>
+  </header>
+
+  <article class="post-content">
+    <h2 id="day14">Day14</h2>
+
+<ul>
+  <li>
+    <p>熟悉后端打包发版流程</p>
+
+    <ol>
+      <li>在IDEA的maven栏中，选择parent父模块，package进行打包，即可生成core、service和web层各自的jar包，经实验可以不在原生成路径进行运行，但是会在当前路径生成文件</li>
+    </ol>
+  </li>
+  <li>
+    <p>发现定时同步数据时需要获取外部接口，为其设置连接时间和数据传输时间，防止程序卡死线程堆积</p>
+
+    <ul>
+      <li>
+        <p>ConnectTimeout</p>
+
+        <p>指的是建立连接所用的时间，适用于网络状况正常的情况下，两端连接所用的时间。在java中，网络状况正常的情况下，例如使用HttpClient或者HttpURLConnetion连接时设置参数connectTimeout=5000即5秒，如果连接用时超过5秒就是抛出java.net.SocketException: connetct time out的异常</p>
+      </li>
+      <li>
+        <p>ReadTimeout</p>
+
+        <p>指的是建立连接后从服务器读取到可用资源所用的时间。在这里我们可以这样理解</p>
+
+        <p>ReadTimeout：正常情况下，当我们发出请求时可以收到请求的结果，也就是页面上展示的内容，但是当网络状况很差的时候，就会出现页面上无法展示出内容的情况。另外当我们使用爬虫或者其他全自动的程序时，无法判断当前的网络状况是否良好，此时就有了ReadTimeout的用武之地了，通过设置ReadTimeout参数，例：</p>
+
+        <p>ReadTimeout=5000，超过5秒没有读取到内容时，就认为此次读取不到内容并抛出Java.net.SocketException: read time out的异常。</p>
+
+        <p>根据上面关于ConnectTimeout和ReadTimeout的描述，在我们使用需要设置这两项参数的服务或程序时，应该对两项参数一起设置。</p>
+      </li>
+      <li>
+        <p>同时了解一下HttpClient连接池，这是apache中用于处理http的交互，内部使用了http连接池，可参考连接：https://www.cnblogs.com/hujunzheng/p/11629198.html</p>
+
+        <p>在生产环境系统使用HttpClient工具类会出现导致系统假死的问题：</p>
+
+        <ul>
+          <li>情景1：httpclient调用服务时没有设置超时时间，http线程都处于自身阻塞状态，拖垮应用服务器。</li>
+          <li>情景2：httpclient连接池单个路由最大连接数设置不合理，业务高峰期时无法及时从连接池中获取连接，导致http线程都处于BLOCKED（阻塞于锁）状态，逐渐拖垮应用服务器。</li>
+        </ul>
+
+        <p>从以上两个场景分析一下，首先对于超时时间的设置，要考虑http请求连接超时、http请求读取内容超时、从连接池中获取可用http连接超时，要根据具体的业务场景合理化配置。还有就是最大连接池数和每个路由最大连接数配置，也需要考虑哪些业务是否有业务高峰期然后合理配置，针对特殊的业务设置使用唯一的HttpClient，即为该业务创建指定的线程池。</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>搭建自己的个人博客：使用jekyll，具体流程会在第一篇博客中描述，现在需要处理markdown文件格式渲染问题</p>
+  </li>
+</ul>
+
+  </article>
+
+</div>
+
+    </div>
+
+  </body>
+
+</html>

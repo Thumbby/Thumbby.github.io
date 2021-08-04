@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>实习日记5</title>
+  <meta name="description" content="Day5">
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:600' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/clean/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/clean/jekyll/update/2021/07/20/diary-for-internship-day5.html">
+  <link rel="alternate" type="application/rss+xml" title="Thumbby's Blog" href="http://yourdomain.com/clean/feed.xml" />
+</head>
+
+<style>
+  table{
+    border-left:1px solid #000000;border-top:1px solid #000000;
+    width: 100%;
+    word-wrap:break-word; word-break:break-all;
+  }
+  table th{
+  text-align:center;
+  }
+  table th,td{
+    border-right:1px solid #000000;border-bottom:1px solid #000000;
+  }
+</style>
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/clean/">Thumbby's Blog</a>
+
+    <nav class="site-nav">
+        
+          
+          <a class="page-link" href="/clean/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">实习日记5</h1>
+    <p class="post-meta">Jul 20, 2021</p>
+  </header>
+
+  <article class="post-content">
+    <h2 id="day5">Day5</h2>
+
+<ul>
+  <li>开发手册学习：
+    <ul>
+      <li>数据库索引规约：
+        <ul>
+          <li>唯一索引影响的insert速度损耗可以忽略，但会明显提高查找速度，另外，即使在应用层做了非常完善的校验控制，只要没有唯一索引，根据墨菲定律，就必然有脏数据生成。</li>
+          <li>在varchar字段上建立索引时，必须指定索引长度，没必要对全字段建立索引，根据实际文本区分度决定索引长度即可。索引的长度与区分度是一对矛盾体，一般对于字符串类型数据，长度为20的索引，区分度会高达90%以上，可以使用count(distinct left(列名，索引长度))/count(*)的区分度来确定</li>
+          <li>页面所搜严禁做模糊或者全模糊，如果需要，通过搜索引擎来解决，因为索引文件具有B-Tree的最左前缀匹配特性，如果左边的值未确定，那么无法使用此索引。</li>
+          <li>SQL性能优化的目标：至少达到range级别，要求是ref级别，最好是consts级别。
+            <ul>
+              <li>consts级别是指单表中最多只有一个匹配行(主键或者唯一索引，在优化阶段即可读取到数据)</li>
+              <li>ref级别是指使用普通的索引(normal index)</li>
+              <li>range级别是指对索引进行范围检索</li>
+            </ul>
+          </li>
+          <li>count()会值为NULL的行，而count(列名)不会统计此列值为NULL的行，所以不要使用count(列名)或count(常量)来替代count(*)</li>
+          <li>SQL中使用ISNULL()判断是否为NULL值，因为NULL与任何值的直接比较都为NULL。</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>源代码学习：
+    <ul>
+      <li>mybatisplus:
+        <ul>
+          <li>条件构造器(wrapper):
+            <ul>
+              <li>说明：
+                <ul>
+                  <li>以下出现的第一个入参<code class="language-plaintext highlighter-rouge">boolean condition</code>表示该条件<strong>是否</strong>加入最后生成的sql中，例如：query.like(StringUtils.isNotBlank(name), Entity::getName, name) .eq(age!=null &amp;&amp; age &gt;= 0, Entity::getAge, age)</li>
+                  <li>以下代码块内的多个方法均为从上往下补全个别<code class="language-plaintext highlighter-rouge">boolean</code>类型的入参,默认为<code class="language-plaintext highlighter-rouge">true</code></li>
+                  <li>以下出现的泛型<code class="language-plaintext highlighter-rouge">Param</code>均为<code class="language-plaintext highlighter-rouge">Wrapper</code>的子类实例(均具有<code class="language-plaintext highlighter-rouge">AbstractWrapper</code>的所有方法)</li>
+                  <li>以下方法在入参中出现的<code class="language-plaintext highlighter-rouge">R</code>为泛型,在普通wrapper中是<code class="language-plaintext highlighter-rouge">String</code>,在LambdaWrapper中是<strong>函数</strong>(例:<code class="language-plaintext highlighter-rouge">Entity::getId</code>,<code class="language-plaintext highlighter-rouge">Entity</code>为实体类,<code class="language-plaintext highlighter-rouge">getId</code>为字段<code class="language-plaintext highlighter-rouge">id</code>的<strong>getMethod</strong>)</li>
+                  <li>以下方法入参中的<code class="language-plaintext highlighter-rouge">R column</code>均表示数据库字段,当<code class="language-plaintext highlighter-rouge">R</code>具体类型为<code class="language-plaintext highlighter-rouge">String</code>时则为数据库字段名(<strong>字段名是数据库关键字的自己用转义符包裹!</strong>)!而不是实体类数据字段名!!!,另当<code class="language-plaintext highlighter-rouge">R</code>具体类型为<code class="language-plaintext highlighter-rouge">SFunction</code>时项目runtime不支持eclipse自家的编译器!!!</li>
+                  <li>以下举例均为使用普通wrapper,入参为<code class="language-plaintext highlighter-rouge">Map</code>和<code class="language-plaintext highlighter-rouge">List</code>的均以<code class="language-plaintext highlighter-rouge">json</code>形式表现!</li>
+                  <li>使用中如果入参的<code class="language-plaintext highlighter-rouge">Map</code>或者<code class="language-plaintext highlighter-rouge">List</code>为<strong>空</strong>,则不会加入最后生成的sql中!!!</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>根据数据表类型分别调用不同的DAO实现，如果是树形结构则调用ITree，反之调用IAdv</li>
+    </ul>
+  </li>
+</ul>
+
+  </article>
+
+</div>
+
+    </div>
+
+  </body>
+
+</html>
