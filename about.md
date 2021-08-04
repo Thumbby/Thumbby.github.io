@@ -6,7 +6,7 @@ permalink: /about/
 
 Welcome to Thumbby's blog!
 
-This is the base Jekyll theme from http://jekyllthemes.org/themes/clean/.
+This is the base Jekyll theme from github.com/knaman2609/clean
 
  You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
 
