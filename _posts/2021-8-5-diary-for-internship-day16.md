@@ -7,7 +7,8 @@ categories: jekyll update
 
 ## Day16
 
-##### Java学习，基于https://github.com/doocs/advanced-java
+- ##### Java学习，基于https://github.com/doocs/advanced-java
+
 
 - 消息队列(MQ)
 
