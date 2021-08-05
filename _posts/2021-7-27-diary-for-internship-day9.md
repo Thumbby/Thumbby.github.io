@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "实习日记9"
+title:  "实习日记9(DataQL)"
 date:   2021-07-27
 categories: jekyll update
 ---

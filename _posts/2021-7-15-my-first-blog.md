@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "我的第一篇博客"
+title:  "我的第一篇博客(jekyll搭建个人静态博客)"
 date:   2021-07-15
 categories: jekyll update
 ---

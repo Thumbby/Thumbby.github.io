@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "实习日记3"
+title:  "实习日记3(redis+lua)"
 date:   2021-07-16
 categories: jekyll update
 ---

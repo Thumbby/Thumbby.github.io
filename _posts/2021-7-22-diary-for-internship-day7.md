@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "实习日记7"
+title:  "实习日记7(MybaitsPlus+redis)"
 date:   2021-07-22
 categories: jekyll update
 ---

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "实习日记5"
+title:  "实习日记5(MybatisPlus+编程规范)"
 date:   2021-07-20
 categories: jekyll update
 ---

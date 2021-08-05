@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "实习日记8"
+title:  "实习日记8(环境搭建+Dataway)"
 date:   2021-07-23
 categories: jekyll update
 ---
