@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "实习日记18"
+title:  "实习日记18(ES搜索引擎+Redis)"
 date:   2021-08-09
 categories: jekyll update
 ---
