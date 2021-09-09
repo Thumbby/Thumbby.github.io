@@ -1,10 +1,9 @@
-```
+---
 layout: post
-title:  "实习日记38(环境搭建)“
+title:  "实习日记38(环境搭建)"
 date:   2021-09-09
 categories: jekyll update
-
-```
+---
 
 ## Day38
 
