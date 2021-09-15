@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "实习日记39(influxDB+Kafka)
+title:  "实习日记39(influxDB+Kafka)"
 date:   2021-09-10
 categories: jekyll update
 ---

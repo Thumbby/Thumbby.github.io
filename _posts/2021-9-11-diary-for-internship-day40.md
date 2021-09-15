@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "实习日记40
+title:  "实习日记40(influxdb+telegraf+grafana搭建)"
 date:   2021-09-13
 categories: jekyll update
 ---
