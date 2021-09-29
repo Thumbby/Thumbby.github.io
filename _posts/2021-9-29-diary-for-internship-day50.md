@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "实习日记50(SpringBoot)"
+title:  "实习日记50(Spring)"
 date:   2021-09-29
 categories: jekyll update
 ---
