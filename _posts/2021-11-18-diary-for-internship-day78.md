@@ -70,7 +70,7 @@ SELECT_clause <field_key>::<type> FROM_clause
 使用该种方法将字段值从整数转换为浮点数或者从浮点数转化为整数，官方给出了如下使用案例：
 
 ```
-![QQ截图20211117162641](C:\Users\Thumbby\Desktop\wiki\QQ截图20211117162641.png)> SELECT "water_level"::integer FROM "h2o_feet" LIMIT 4
+SELECT "water_level"::integer FROM "h2o_feet" LIMIT 4
 
 name: h2o_feet
 --------------
