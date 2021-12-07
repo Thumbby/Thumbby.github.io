@@ -1,7 +1,7 @@
 ---
 layout: post
-title:"实习日记88"
-date:2021-12-06(Influx2插入数据并修改数据类型)
+title:  "实习日记88"
+date:   2021-12-06(InfluxDB2插入数据)
 categories: jekyll update
 typora-root-url: ./
 ---
