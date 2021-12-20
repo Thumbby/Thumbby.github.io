@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "实习日记93"
-date:   2021-12-20(Java Class文件格式)
+title:  "实习日记93(Java Class文件格式)"
+date:   2021-12-20
 categories: jekyll update
 typora-root-url: ./
 ---
