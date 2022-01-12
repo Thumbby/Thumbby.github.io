@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "实习日记103"
-date:   2022-101-10
+date:   2022-01-10
 categories: jekyll update
 typora-root-url: ./
 ---
